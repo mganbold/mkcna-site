@@ -56,7 +56,7 @@ const daysLabel = dayWords[days - 1] ?? String(days);
   <section class="py-20 bg-brand-cream">
     <div class="max-w-7xl mx-auto px-6">
       <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-espresso mb-8">Festival at a glance</h2>
-      <div class="grid md:grid-cols-3 border border-brand-beige bg-white rounded-2xl overflow-hidden md:divide-x divide-y md:divide-y-0 divide-brand-beige">
+      <div data-reveal class="grid md:grid-cols-3 border border-brand-beige bg-white rounded-2xl overflow-hidden md:divide-x divide-y md:divide-y-0 divide-brand-beige">
         <div class="p-7">
           <h3 class="font-bold text-xl text-brand-espresso mb-1">{dates}</h3>
           <p>{daysLabel} {days === 1 ? 'day' : 'days'} of performances, workshops, and community time.</p>
@@ -77,7 +77,7 @@ const daysLabel = dayWords[days - 1] ?? String(days);
 
       {
         f.highlights.length > 0 && (
-          <div class="grid md:grid-cols-2 gap-12 mt-16">
+          <div class="grid md:grid-cols-2 gap-12 mt-16" data-reveal-group>
             <div>
               <h2 class="text-3xl font-serif font-bold text-brand-espresso mb-4">Festival highlights</h2>
               <div class="max-w-md">
@@ -99,8 +99,8 @@ const daysLabel = dayWords[days - 1] ?? String(days);
       {
         f.partners.length > 0 && (
           <>
-            <h3 class="font-bold text-brand-espresso mt-14 mb-3">Partners and sponsors</h3>
-            <p class="max-w-3xl">{f.partners.join(', ')}.</p>
+            <h3 class="font-bold text-brand-espresso mt-14 mb-3" data-reveal>Partners and sponsors</h3>
+            <p class="max-w-3xl" data-reveal>{f.partners.join(', ')}.</p>
           </>
         )
       }

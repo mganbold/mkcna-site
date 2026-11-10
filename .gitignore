@@ -9,3 +9,6 @@ npm-debug.log*
 
 # downloaded project archive
 *.zip
+
+# Files the Claude app saves here
+Claude outputs/

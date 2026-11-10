@@ -58,7 +58,7 @@ const cards: Card[] = [
   <section class="py-16 bg-brand-cream">
     <div class="max-w-7xl mx-auto px-6">
       <h2 class="text-2xl font-serif font-bold text-brand-espresso mb-6">Upcoming</h2>
-      <div class="bg-night text-[#e9eef3] rounded-2xl p-8 md:p-10 md:flex md:items-center md:justify-between gap-8">
+      <div data-reveal class="bg-night text-[#e9eef3] rounded-2xl p-8 md:p-10 md:flex md:items-center md:justify-between gap-8">
         <div>
           <p class="text-sm text-brand-amber font-semibold">{mongolia.dates}</p>
           <h3 class="text-2xl md:text-3xl font-serif font-bold my-2">8th International Festival</h3>
@@ -73,7 +73,7 @@ const cards: Card[] = [
       </div>
 
       <h2 class="text-2xl font-serif font-bold text-brand-espresso mt-16 mb-6">North American festivals</h2>
-      <div class="grid md:grid-cols-2 gap-8">
+      <div class="grid md:grid-cols-2 gap-8" data-reveal-group>
         {
           cards.map((c) => (
             <article id={`fy${c.label}`} class="bg-white rounded-2xl border border-brand-beige overflow-hidden">

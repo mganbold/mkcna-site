@@ -13,14 +13,14 @@ const pillars = [
 
 <section id="about" class="py-20 md:py-24 bg-brand-ivory">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="max-w-3xl mx-auto text-center mb-12">
+    <div class="max-w-3xl mx-auto text-center mb-12" data-reveal>
       <p class="text-brand-amberDark font-semibold text-sm mb-3">About MKCNA</p>
       <h2 class="text-3xl md:text-5xl md:leading-none font-serif font-bold text-brand-espresso leading-tight mb-5">One community. One instrument.</h2>
       <p class="text-lg font-light">
         Bringing North America&rsquo;s morin khuur community together. Morin Khuur Center in North America began with a simple idea in 2018: a small gathering of amateur morin khuur players in the USA. As more activities were added, the gathering grew into the First Morin Khuur Festival in the USA, organized with the Khuurchiinkhan morin khuur learning center and the Mongolian Cultural Organization at the University of Michigan. That festival showed how much our players wanted to grow as a community, learn, and promote Mongolian culture through the morin khuur, and in 2020 they founded MKCNA. Since then, MKCNA has grown into a registered 501(c)(3) nonprofit that hosts the Morin Khuur Festival in the USA and brings players together through virtual concerts, cultural shows, and partnerships with festivals in Europe and Mongolia.
       </p>
     </div>
-    <figure class="mb-10 m-0">
+    <figure class="mb-10 m-0" data-reveal>
       <Image
         src={groupPhoto}
         widths={[640, 1024, 1440, 1800]}
@@ -30,7 +30,7 @@ const pillars = [
       />
       <figcaption class="text-sm mt-3">Players, teachers, and guests at our most recent North American festival.</figcaption>
     </figure>
-    <div class="grid md:grid-cols-3 gap-8">
+    <div class="grid md:grid-cols-3 gap-8" data-reveal-group>
       {
         pillars.map((p) => (
           <div class="border-t-4 border-brand-amber pt-5">
@@ -40,11 +40,11 @@ const pillars = [
         ))
       }
     </div>
-    <p class="mt-10 text-sm">
+    <p class="mt-10 text-sm" data-reveal>
       Independent schools and ensembles across the continent work with us.
       <a class="underline font-semibold text-brand-amberDark" href="/affiliates">Meet the affiliate community</a>
     </p>
-    <figure class="max-w-4xl mx-auto mt-14 m-0">
+    <figure class="max-w-4xl mx-auto mt-14 m-0" data-reveal>
       <YouTube id={aboutVideo.id} title={aboutVideo.title} />
       <figcaption class="text-sm text-center mt-3 opacity-80">{aboutVideo.credits}</figcaption>
     </figure>

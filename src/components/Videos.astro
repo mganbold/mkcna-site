@@ -7,11 +7,11 @@ import { videos } from '../data/videos';
 
 <section id="videos" class="py-24 bg-brand-cream">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center max-w-2xl mx-auto mb-14">
+    <div class="text-center max-w-2xl mx-auto mb-14" data-reveal>
       <h1 class="text-3xl md:text-4xl font-serif font-bold text-brand-espresso mb-4">Experience the Sound of the Morin Khuur</h1>
       <p class="font-light leading-relaxed">Featured performances and festival recordings from our artist network.</p>
     </div>
-    <figure class="mb-8 m-0">
+    <figure class="mb-8 m-0" data-reveal>
       <Image
         src={galaPhoto}
         widths={[640, 1024, 1440, 1800]}
@@ -22,7 +22,7 @@ import { videos } from '../data/videos';
       />
       <figcaption class="text-sm text-center mt-3 opacity-80">Performers after the gala concert of the 4th Morin Khuur Festival in the USA, May 10, 2026.</figcaption>
     </figure>
-    <div class="grid md:grid-cols-2 gap-8">
+    <div class="grid md:grid-cols-2 gap-8" data-reveal-group>
       {
         videos.map((v) => (
           <div class="bg-brand-ivory p-4 rounded-2xl border border-brand-beige">

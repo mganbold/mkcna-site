@@ -8,13 +8,13 @@ const spanClass = { 2: 'md:col-span-2', 3: 'md:col-span-3' } as const;
 
 <section id="hubs" class="py-24 bg-brand-ivory border-t border-brand-beige">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="mb-14 max-w-2xl">
+    <div class="mb-14 max-w-2xl" data-reveal>
       <h1 class="text-3xl md:text-4xl font-serif font-bold text-brand-espresso mb-3">Our Affiliate Community</h1>
       <p class="font-light">
         MKCNA convenes and supports players across North America. These independent groups teach and perform in their own regions, each with its own leadership and funding.
       </p>
     </div>
-    <div class="grid md:grid-cols-6 gap-6">
+    <div class="grid md:grid-cols-6 gap-6" data-reveal-group>
       {
         affiliates.map((a) => (
           <div class:list={[spanClass[a.span], 'bg-brand-cream p-7 rounded-2xl border border-brand-beige']}>

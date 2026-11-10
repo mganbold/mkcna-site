@@ -25,12 +25,21 @@ import { mongolianScript } from '../site.config';
   </div>
   <div class="relative max-w-4xl mx-auto px-6 -mt-12 md:-mt-28">
     <div class="bg-white rounded-2xl shadow-xl border-t-4 border-brand-amber p-8 md:p-12 flex gap-6 md:gap-10">
-      <div
-        class="mn-script text-3xl md:text-5xl text-brand-espresso border-r-2 border-brand-amber pr-4 md:pr-6 shrink-0"
-        lang="mn-Mong"
-        title={mongolianScript.title}
-      >
-        {mongolianScript.text}
+      <div class="flex gap-3 md:gap-5 shrink-0">
+        <div class="mn-script text-3xl md:text-5xl text-brand-espresso" lang="mn-Mong" title={mongolianScript.title}>
+          {mongolianScript.text}
+        </div>
+        <!-- The two strings: drawn in on load, then "bowed" once (see Motion in global.css). -->
+        <svg class="hero-strings block w-3 self-stretch" viewBox="0 0 12 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g class="string-vib s1">
+            <line class="string" x1="3.5" y1="0" x2="3.5" y2="100" pathLength="1" stroke-width="1.5"></line>
+            <line class="string-glint" x1="3.5" y1="0" x2="3.5" y2="100" pathLength="1" stroke-width="2"></line>
+          </g>
+          <g class="string-vib s2">
+            <line class="string" x1="9" y1="0" x2="9" y2="100" pathLength="1" stroke-width="2"></line>
+            <line class="string-glint" x1="9" y1="0" x2="9" y2="100" pathLength="1" stroke-width="2.5"></line>
+          </g>
+        </svg>
       </div>
       <div class="flex-1 text-center">
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-brand-espresso tracking-tight leading-[1.05] md:leading-none mb-4">
@@ -47,3 +56,4 @@ import { mongolianScript } from '../site.config';
     </div>
   </div>
 </section>
+

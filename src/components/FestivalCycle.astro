@@ -19,14 +19,14 @@ const posterSizes = '(min-width: 1280px) 395px, (min-width: 768px) 33vw, 100vw';
 
 <section id="cycle" class="py-20 md:py-24 bg-brand-cream">
   <div class="max-w-7xl mx-auto px-6">
-    <div class="max-w-3xl mx-auto text-center mb-12">
+    <div class="max-w-3xl mx-auto text-center mb-12" data-reveal>
       <h2 class="text-3xl md:text-5xl md:leading-none font-serif font-bold text-brand-espresso leading-tight mb-5">One of Three Festivals in a Global Cycle</h2>
       <p class="text-lg font-light">
         The morin khuur community gathers on a three-year rhythm that rotates between Europe, North America, and Mongolia. MKCNA hosts the North American festival and connects our players to the partner festivals on either side.
       </p>
     </div>
 
-    <div class="hidden md:grid grid-cols-3 gap-6 relative mb-8" aria-hidden="true">
+    <div class="hidden md:grid grid-cols-3 gap-6 relative mb-8" aria-hidden="true" data-reveal>
       <div class="absolute left-[16.66%] right-[16.66%] top-[11px] h-0.5 bg-brand-amber"></div>
       {
         timeline.map((t) => (
@@ -39,7 +39,7 @@ const posterSizes = '(min-width: 1280px) 395px, (min-width: 768px) 33vw, 100vw';
       }
     </div>
 
-    <ol class="grid md:grid-cols-3 gap-6 list-none p-0 m-0">
+    <ol class="grid md:grid-cols-3 gap-6 list-none p-0 m-0" data-reveal-group>
       <PartnerFestivalCard festival={europe} sizes={posterSizes} />
 
       <li class="rounded-2xl p-8 flex flex-col bg-night text-[#e3ecf8] border-2 border-brand-amber">
