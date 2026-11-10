@@ -2,8 +2,8 @@ export type Video = { id: string; title: string; description: string };
 
 /** Featured performances on /videos (YouTube video IDs). */
 export const videos: Video[] = [
-  { id: 'G7hdIRQ8-Q4', title: 'International Morin Khuur Gathering', description: 'Ensemble concert performance showcase.' },
-  { id: 'nxQ9YUMSono', title: 'Master Series and Repertoire Showcase', description: 'Traditional techniques and horse-head fiddle heritage.' },
+  { id: 'G7hdIRQ8-Q4', title: '“Strings of the Heart” Trailer 2', description: 'Trailer for the film “Strings of the Heart.”' },
+  { id: 'nxQ9YUMSono', title: 'Үүлэн бор (Üülen Bor)', description: 'A morin khuur performance of “Üülen Bor.”' },
 ];
 
 /** Animated piece shown in the About section. */
