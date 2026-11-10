@@ -19,10 +19,12 @@ export const site = {
   },
 
   contact: {
-    // Web3Forms access key. While it still starts with "YOUR_", the form shows a
-    // "not connected yet" message instead of submitting.
-    web3formsAccessKey: 'YOUR_WEB3FORMS_ACCESS_KEY',
+    // Web3Forms access key (public by design: it can only send to MKCNA's inbox).
+    // If it starts with "YOUR_", the form shows a "not connected yet" message instead.
+    web3formsAccessKey: '81a3ee7a-57b1-44aa-b1dc-77fbcc329111',
+    // Same subject on every message (the topic is inside the email). Replies go to the visitor's email.
     subject: 'New message from the MKCNA website',
+    fromName: 'MKCNA website',
     topics: [
       'General question',
       'Festivals',
