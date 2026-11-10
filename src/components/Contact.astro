@@ -1,0 +1,86 @@
+---
+import { site } from '../site.config';
+const a = site.address;
+const field = 'mt-1.5 w-full rounded-lg border border-brand-beige px-4 py-3 text-base focus:outline-hidden focus:border-brand-amber';
+---
+
+<section id="contact" class="py-20 bg-brand-ivory border-t border-brand-beige scroll-mt-20">
+  <div class="max-w-6xl mx-auto px-6 grid lg:grid-cols-5 gap-12">
+    <div class="lg:col-span-2">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-espresso mb-4">Get in touch</h2>
+      <p class="leading-relaxed mb-8">
+        Questions about the festival, joining our community, or supporting MKCNA? Send us a message and we&rsquo;ll get back to you.
+      </p>
+      <p class="text-sm leading-relaxed">
+        <span class="font-semibold text-brand-espresso">{site.name}</span><br />
+        {a.street}, {a.city}, {a.region} {a.postal}<br />
+        <a class="underline" href={`tel:${site.phone.tel}`}>{site.phone.display}</a>
+      </p>
+    </div>
+    <form
+      id="cform"
+      class="lg:col-span-3 bg-white rounded-2xl border border-brand-beige border-t-4 border-t-brand-amber p-8 md:p-10 grid sm:grid-cols-2 gap-5"
+      novalidate
+    >
+      <input type="hidden" name="access_key" value={site.contact.web3formsAccessKey} />
+      <input type="hidden" name="subject" value={site.contact.subject} />
+      <!-- Honeypot: real visitors never see or tick this; Web3Forms drops submissions that do. -->
+      <input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
+      <label class="block text-sm font-medium text-brand-espresso">Name<input name="name" required autocomplete="name" class={field} /></label>
+      <label class="block text-sm font-medium text-brand-espresso">Email<input name="email" type="email" required autocomplete="email" class={field} /></label>
+      <label class="block sm:col-span-2 text-sm font-medium text-brand-espresso"
+        >Topic<select name="topic" class={`${field} bg-white`}>
+          {site.contact.topics.map((t) => <option>{t}</option>)}
+        </select></label
+      >
+      <label class="block sm:col-span-2 text-sm font-medium text-brand-espresso">Message<textarea name="message" required rows="5" class={field}></textarea></label>
+      <div class="sm:col-span-2 flex flex-wrap items-center gap-4">
+        <button type="submit" class="bg-brand-espresso text-brand-cream hover:bg-black font-semibold px-8 py-3.5 rounded-full">Send message</button>
+        <p id="cstatus" class="text-sm" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById('cform') as HTMLFormElement;
+  const status = document.getElementById('cstatus')!;
+  const button = form.querySelector('button')!;
+
+  function show(message: string, tone: 'error' | 'info' | 'ok' | 'neutral') {
+    status.textContent = message;
+    status.className =
+      'text-sm ' +
+      { error: 'text-red-700', info: 'text-brand-amberDark', ok: 'text-green-800', neutral: '' }[tone];
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      show('Please fill in your name, a valid email, and a message.', 'error');
+      return;
+    }
+    const key = (form.elements.namedItem('access_key') as HTMLInputElement).value;
+    if (key.startsWith('YOUR_')) {
+      show('This form isn’t connected yet. Please call or message us on Facebook for now.', 'info');
+      return;
+    }
+    button.disabled = true;
+    show('Sending…', 'neutral');
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message);
+      form.reset();
+      show('Thank you! Your message has been sent.', 'ok');
+    } catch {
+      show('Sorry, your message couldn’t be sent. Please try again or call us.', 'error');
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>

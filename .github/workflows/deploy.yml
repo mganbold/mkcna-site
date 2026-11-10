@@ -1,0 +1,46 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Every push to main publishes the site.
+  push:
+    branches: [main]
+  # Daily rebuild so date-based content (e.g. festival/legacy mode) updates on its own.
+  # GitHub cron runs in UTC: 08:17 UTC = 00:17 Pacific in winter, 01:17 in summer.
+  # Note: GitHub pauses scheduled runs after 60 days with no commits in a public repo;
+  # re-enable from the Actions tab if that happens.
+  schedule:
+    - cron: '17 8 * * *'
+  # "Run workflow" button on the Actions tab.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never run two deployments at once; let an in-progress one finish.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+      - name: Install, build, and upload the site
+        uses: withastro/action@v6
+        with:
+          node-version: 24
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+/*
+ * MKCNA palette — kept exactly as in the original single-file site.
+ * Values are space-separated RGB triplets so they can be used as rgb(var(--x) / alpha).
+ *
+ *   --espresso / --night  deel indigo   #1F2A5A  (headings, dark sections)
+ *   --amber               sash gold     #D4A017  (accents, khee-band)
+ *   --amberDark           evergreen     #2F5D50  (links, labels)
+ *   --cream               mist          #EEF2F1  (page background)
+ *   --magenta             sunset coral  #C8664A  (rare highlights only)
+ */
+:root {
+  --cream: 238 242 241;
+  --ivory: 226 233 231;
+  --beige: 204 214 211;
+  --amber: 212 160 23;
+  --amberDark: 47 93 80;
+  --espresso: 31 42 90;
+  --slate: 38 42 54;
+  --night: 31 42 90;
+  --magenta: 200 102 74;
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Expose the palette to Tailwind utilities (bg-brand-amber, text-night/90, ...). */
+@theme inline {
+  --color-night: rgb(var(--night));
+  --color-brand-cream: rgb(var(--cream));
+  --color-brand-ivory: rgb(var(--ivory));
+  --color-brand-beige: rgb(var(--beige));
+  --color-brand-amber: rgb(var(--amber));
+  --color-brand-amberDark: rgb(var(--amberDark));
+  --color-brand-espresso: rgb(var(--espresso));
+  --color-brand-slate: rgb(var(--slate));
+  --color-brand-coral: rgb(var(--magenta));
+
+  --font-serif: "Alegreya", Georgia, serif;
+  --font-cinzel: "Alegreya", Georgia, serif;
+  --font-sans: "Alegreya Sans", "Gill Sans", Arial, sans-serif;
+}
+
+/* Site-wide rules (unlayered, as in the original, so they win over utilities). */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 90px;
+  background: rgb(var(--cream));
+}
+body {
+  background: rgb(var(--cream));
+  color: rgb(var(--slate));
+  font-size: 1.0625rem;
+}
+[hidden] {
+  display: none !important;
+}
+/* Tailwind v4 resets buttons to cursor:default; the original (v3) used pointer. */
+button:not(:disabled) {
+  cursor: pointer;
+}
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid rgb(var(--amber));
+  outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body .font-serif {
+  font-weight: 700;
+  letter-spacing: -0.005em;
+}
+
+/* Vertical traditional Mongolian script (homepage headline). */
+.mn-script {
+  writing-mode: vertical-lr;
+  font-family: "Noto Sans Mongolian", serif;
+  line-height: 1;
+}
+
+/* Gold hammer-pattern ("khee") border on indigo. */
+.khee-band {
+  height: 26px;
+  background-color: rgb(var(--espresso));
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='26'%3E%3Cpath d='M2 22V4h12v11H8V9M18 4v18h12V11h-6v6' fill='none' stroke='%23D4A017' stroke-width='2.5' stroke-linecap='square'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: center;
+}
+
+.navlink {
+  border-bottom: 2px solid transparent;
+  padding-block: 4px;
+}
+.navlink.block {
+  border-bottom: 1px solid rgb(var(--beige));
+}
+.navlink[aria-current="page"] {
+  color: rgb(var(--amberDark));
+  font-weight: 600;
+}
+nav .navlink[aria-current="page"]:not(.block) {
+  border-bottom-color: rgb(var(--amber));
+}

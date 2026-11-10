@@ -1,0 +1,112 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import { mongolia } from '../../data/cycle';
+import { festivalStubs, ordinal } from '../../data/pastFestivals';
+import { getFestivals, festivalUrl } from '../../lib/festivals';
+
+const festivals = await getFestivals();
+
+type Card = {
+  number: number;
+  label: string;
+  yearLabel: string;
+  city: string;
+  summary: string;
+  href?: string;
+  image?: { src: ImageMetadata; alt: string; position: string };
+};
+
+const cards: Card[] = [
+  ...festivals.map((f) => ({
+    number: f.data.number,
+    label: ordinal(f.data.number),
+    yearLabel: String(f.data.start.getUTCFullYear()),
+    city: f.data.city,
+    summary: f.data.summary,
+    href: festivalUrl(f),
+    image: { src: f.data.hero.image, alt: f.data.hero.alt, position: f.data.hero.position },
+  })),
+  ...festivalStubs.map((s) => ({
+    number: s.number,
+    label: ordinal(s.number),
+    yearLabel: s.year ? String(s.year) : 'Year to be added',
+    city: s.city ?? 'City to be added',
+    summary: s.summary ?? 'Details coming soon.',
+  })),
+].sort((a, b) => b.number - a.number);
+---
+
+<Layout title="Festivals" description="North American Morin Khuur Festivals hosted by MKCNA, and the partner festivals in Europe and Mongolia.">
+  <section class="bg-brand-ivory py-16 border-b border-brand-beige">
+    <div class="max-w-7xl mx-auto px-6">
+      <h1 class="text-4xl md:text-5xl font-serif font-bold text-brand-espresso mb-4">Festivals</h1>
+      <p class="max-w-2xl font-light text-lg">Each festival brings players, teachers, and scholars together. See what is coming next and revisit the past.</p>
+      <nav class="flex flex-wrap gap-2 mt-8" aria-label="Jump to a festival">
+        {
+          cards.map((c) => (
+            <a class="px-4 py-2 rounded-full border border-brand-beige bg-white text-sm font-medium hover:border-brand-amber" href={`#fy${c.label}`}>
+              {c.label}
+              {/^\d{4}$/.test(c.yearLabel) && ` · ${c.yearLabel}`}
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </section>
+
+  <section class="py-16 bg-brand-cream">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-2xl font-serif font-bold text-brand-espresso mb-6">Upcoming</h2>
+      <div class="bg-night text-[#e9eef3] rounded-2xl p-8 md:p-10 md:flex md:items-center md:justify-between gap-8">
+        <div>
+          <p class="text-sm text-brand-amber font-semibold">{mongolia.dates}</p>
+          <h3 class="text-2xl md:text-3xl font-serif font-bold my-2">8th International Festival</h3>
+          <p class="text-[#c5d1dd]">Ulaanbaatar, Mongolia, hosted by the World Morin Khuur Association.</p>
+        </div>
+        <a
+          class="inline-block mt-6 md:mt-0 shrink-0 bg-brand-amber text-brand-espresso font-semibold px-7 py-3 rounded-full"
+          href={mongolia.link.href}
+          target="_blank"
+          rel="noopener noreferrer">{mongolia.link.label}</a
+        >
+      </div>
+
+      <h2 class="text-2xl font-serif font-bold text-brand-espresso mt-16 mb-6">North American festivals</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        {
+          cards.map((c) => (
+            <article id={`fy${c.label}`} class="bg-white rounded-2xl border border-brand-beige overflow-hidden">
+              {c.image ? (
+                <Image
+                  src={c.image.src}
+                  alt={c.image.alt}
+                  widths={[640, 1000]}
+                  sizes="(min-width: 1280px) 600px, (min-width: 768px) 50vw, 100vw"
+                  class:list={['aspect-video w-full object-cover', c.image.position]}
+                />
+              ) : (
+                <div class="aspect-video bg-brand-beige/60 border-b border-dashed border-brand-amber/60 flex items-center justify-center text-sm text-brand-slate">
+                  Photo coming soon
+                </div>
+              )}
+              <div class="p-7">
+                <p class="text-sm font-semibold text-brand-amberDark">{c.yearLabel}</p>
+                <h3 class="text-xl font-bold text-brand-espresso">{c.label} North American Festival</h3>
+                <p class="text-sm font-medium mb-3">{c.city}</p>
+                <p class="text-sm leading-relaxed mb-4">{c.summary}</p>
+                {c.href ? (
+                  <a class="text-sm font-semibold text-brand-amberDark underline" href={c.href}>
+                    View festival details
+                  </a>
+                ) : (
+                  <span class="text-sm text-brand-slate/70">Archive page coming soon</span>
+                )}
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>

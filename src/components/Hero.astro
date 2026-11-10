@@ -1,0 +1,49 @@
+---
+import { Image } from 'astro:assets';
+import heroImage from '../assets/home/hero-player-sunset.webp';
+import { mongolianScript } from '../site.config';
+---
+
+<section class="bg-brand-cream pb-14">
+  <div class="relative">
+    <Image
+      src={heroImage}
+      widths={[640, 960, 1280, 1700]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class="block w-full h-auto"
+      alt="A long-haired morin khuur player in a blue deel, seated on a mountain rock at sunset, with a lake and snow-capped peaks behind him"
+    />
+    <figure class="absolute m-0 text-brand-espresso" style="left:9%;top:13%;width:31%">
+      <blockquote class="m-0 leading-snug" style="font-size:clamp(.78rem,2.25vw,2.2rem)">
+        &ldquo;Within the two strings of the horsehead fiddle lies the harmony of the universe.&rdquo;
+      </blockquote>
+      <figcaption class="text-right mt-1" style="font-size:clamp(.6rem,1.05vw,1rem)">&mdash; Mongolian proverb</figcaption>
+    </figure>
+    <div class="khee-band absolute bottom-0 left-0 right-0" aria-hidden="true"></div>
+  </div>
+  <div class="relative max-w-4xl mx-auto px-6 -mt-12 md:-mt-28">
+    <div class="bg-white rounded-2xl shadow-xl border-t-4 border-brand-amber p-8 md:p-12 flex gap-6 md:gap-10">
+      <div
+        class="mn-script text-3xl md:text-5xl text-brand-espresso border-r-2 border-brand-amber pr-4 md:pr-6 shrink-0"
+        lang="mn-Mong"
+        title={mongolianScript.title}
+      >
+        {mongolianScript.text}
+      </div>
+      <div class="flex-1 text-center">
+        <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-brand-espresso tracking-tight leading-[1.05] md:leading-none mb-4">
+          Two Strings. Countless Stories.
+        </h1>
+        <p class="text-lg font-light leading-relaxed max-w-2xl mx-auto mb-8">
+          A growing community of morin khuur players and enthusiasts across North America, learning together and sharing Mongolian culture through festivals and performances.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#cycle" class="text-center bg-night text-white px-8 py-3.5 rounded-full font-semibold hover:opacity-90">Explore the Festival Cycle</a>
+          <a href="#donate" class="text-center border-2 border-night text-brand-espresso px-8 py-3.5 rounded-full font-semibold hover:bg-night hover:text-white">Support Our Mission</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

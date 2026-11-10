@@ -1,0 +1,20 @@
+---
+import { site } from '../site.config';
+const a = site.address;
+---
+
+<footer class="py-12 bg-brand-cream text-sm">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-6">
+    <p>
+      {site.name}<br />{a.street}, {a.city}, {a.region} {a.postal}<br />
+      <a class="underline" href={`tel:${site.phone.tel}`}>{site.phone.display}</a>
+    </p>
+    <p>
+      <a class="underline" href={site.social.facebook}>Facebook</a> · <a class="underline" href={site.social.youtube}>YouTube</a> · <a
+        class="underline"
+        href={site.social.instagram}>Instagram</a
+      ><br />
+      <a class="underline" href="/affiliates">Affiliate community</a> · <a class="underline" href="#contact">Contact us</a>
+    </p>
+  </div>
+</footer>

@@ -1,0 +1,20 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  /** Classes for the 16:9 frame wrapper (rounding etc.). */
+  class?: string;
+}
+const { id, title, class: frameClass = 'rounded-2xl' } = Astro.props;
+---
+
+<div class:list={['aspect-video w-full overflow-hidden bg-brand-espresso', frameClass]}>
+  <iframe
+    class="w-full h-full"
+    src={`https://www.youtube.com/embed/${id}`}
+    referrerpolicy="strict-origin-when-cross-origin"
+    title={title}
+    loading="lazy"
+    allow="encrypted-media; picture-in-picture"
+    allowfullscreen></iframe>
+</div>

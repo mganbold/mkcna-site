@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets';
+import youngPlayers from '../assets/home/donate-young-players.webp';
+import { site } from '../site.config';
+---
+
+<section id="donate" class="bg-night text-[#e9eef3] py-20">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 md:gap-16 items-center">
+    <div>
+      <h2 class="text-3xl md:text-4xl font-serif font-bold mb-3">Help the music travel</h2>
+      <p class="text-[#c5d1dd] max-w-xl">Your gift supports festivals, workshops, and students learning the morin khuur across North America.</p>
+      <a
+        href={site.donate.paypalUrl}
+        target="_blank"
+        rel="noopener"
+        class="inline-block mt-8 bg-brand-amber text-brand-espresso font-semibold px-8 py-3.5 rounded-full">Donate with PayPal</a
+      >
+      <p class="text-sm text-[#9fb2c6] mt-4">Tax ID (EIN) {site.ein}. You choose your amount and finish your gift securely on PayPal.</p>
+    </div>
+    <figure class="m-0">
+      <Image
+        src={youngPlayers}
+        widths={[600, 900, 1200]}
+        sizes="(min-width: 1280px) 584px, (min-width: 768px) 50vw, 100vw"
+        class="w-full h-auto rounded-2xl"
+        alt="Young morin khuur players with their instruments, one holding a morin khuur with a carved horse head"
+      />
+    </figure>
+  </div>
+</section>

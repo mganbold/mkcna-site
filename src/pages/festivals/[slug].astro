@@ -1,0 +1,109 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { getFestivals, festivalDates, festivalDays, type Festival } from '../../lib/festivals';
+
+export const getStaticPaths = (async () => {
+  const festivals = await getFestivals();
+  return festivals.map((festival) => ({ params: { slug: festival.id }, props: { festival } }));
+}) satisfies GetStaticPaths;
+
+interface Props {
+  festival: Festival;
+}
+
+const { festival } = Astro.props;
+const f = festival.data;
+const { Content } = await render(festival);
+
+const dates = festivalDates(festival);
+const dayWords = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven'];
+const days = festivalDays(festival);
+const daysLabel = dayWords[days - 1] ?? String(days);
+---
+
+<Layout title={f.title} description={f.summary}>
+  <section class="relative bg-night text-white overflow-hidden">
+    <Image
+      src={f.hero.image}
+      alt={f.hero.alt}
+      widths={[640, 1024, 1400]}
+      sizes="100vw"
+      loading="eager"
+      fetchpriority="high"
+      class:list={['absolute inset-0 w-full h-full object-cover', f.hero.position]}
+    />
+    <div
+      class="absolute inset-0"
+      style="background:linear-gradient(to top,rgb(var(--night)/.95) 0%,rgb(var(--night)/.75) 35%,rgb(var(--night)/.15) 70%,rgb(var(--night)/0) 100%)"
+      aria-hidden="true"
+    >
+    </div>
+    <div class="relative max-w-7xl mx-auto px-6 min-h-[75vh] md:min-h-[80vh] flex flex-col justify-end pt-40 pb-12 md:pb-16">
+      <a href="/festivals" class="self-start text-sm text-white/85 underline mb-4">Back to all festivals</a>
+      <h1 class="text-4xl md:text-6xl md:leading-none font-serif font-bold leading-tight mb-4 max-w-3xl">{f.headline ?? f.title}</h1>
+      <p class="text-white/90 text-lg max-w-xl mb-7">The {f.title}, {dates}, at the {f.venue.name}.</p>
+      <div class="flex flex-wrap gap-3">
+        <a class="inline-block bg-brand-amber text-brand-espresso font-semibold px-7 py-3 rounded-full" href="/videos">See performances</a>
+        <a class="inline-block border-2 border-white/70 font-semibold px-7 py-3 rounded-full hover:bg-white/10" href="#donate">Support the next festival</a>
+      </div>
+    </div>
+    <div class="khee-band absolute bottom-0 left-0 right-0" aria-hidden="true"></div>
+  </section>
+
+  <section class="py-20 bg-brand-cream">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-serif font-bold text-brand-espresso mb-8">Festival at a glance</h2>
+      <div class="grid md:grid-cols-3 border border-brand-beige bg-white rounded-2xl overflow-hidden md:divide-x divide-y md:divide-y-0 divide-brand-beige">
+        <div class="p-7">
+          <h3 class="font-bold text-xl text-brand-espresso mb-1">{dates}</h3>
+          <p>{daysLabel} {days === 1 ? 'day' : 'days'} of performances, workshops, and community time.</p>
+        </div>
+        <div class="p-7">
+          <h3 class="font-bold text-xl text-brand-espresso mb-1">{f.venue.name}</h3>
+          <p>{[f.venue.detail, f.venue.address].filter(Boolean).join(', ')}.</p>
+        </div>
+        {
+          f.coHost && (
+            <div class="p-7">
+              <h3 class="font-bold text-xl text-brand-espresso mb-1">With {f.coHost.name}</h3>
+              {f.coHost.description && <p>{f.coHost.description}</p>}
+            </div>
+          )
+        }
+      </div>
+
+      {
+        f.highlights.length > 0 && (
+          <div class="grid md:grid-cols-2 gap-12 mt-16">
+            <div>
+              <h2 class="text-3xl font-serif font-bold text-brand-espresso mb-4">Festival highlights</h2>
+              <div class="max-w-md">
+                <Content />
+              </div>
+            </div>
+            <ul class="divide-y divide-brand-beige border-y border-brand-beige">
+              {f.highlights.map((h) => (
+                <li class="py-4">
+                  <strong class="block text-brand-espresso">{h.title}</strong>
+                  {h.description}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
+
+      {
+        f.partners.length > 0 && (
+          <>
+            <h3 class="font-bold text-brand-espresso mt-14 mb-3">Partners and sponsors</h3>
+            <p class="max-w-3xl">{f.partners.join(', ')}.</p>
+          </>
+        )
+      }
+    </div>
+  </section>
+</Layout>

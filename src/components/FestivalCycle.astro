@@ -1,0 +1,69 @@
+---
+import { Image } from 'astro:assets';
+import PartnerFestivalCard from './PartnerFestivalCard.astro';
+import { europe, mongolia } from '../data/cycle';
+import { getFestivals, festivalDates, festivalUrl } from '../lib/festivals';
+
+// The North American slot is the newest MKCNA festival in the collection.
+const [na] = await getFestivals();
+const naYear = na.data.start.getUTCFullYear();
+
+const timeline = [
+  { year: europe.year, region: europe.region, current: false },
+  { year: naYear, region: 'North America', current: true },
+  { year: mongolia.year, region: mongolia.region, current: false },
+];
+
+const posterSizes = '(min-width: 1280px) 395px, (min-width: 768px) 33vw, 100vw';
+---
+
+<section id="cycle" class="py-20 md:py-24 bg-brand-cream">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-3xl mx-auto text-center mb-12">
+      <h2 class="text-3xl md:text-5xl md:leading-none font-serif font-bold text-brand-espresso leading-tight mb-5">One of Three Festivals in a Global Cycle</h2>
+      <p class="text-lg font-light">
+        The morin khuur community gathers on a three-year rhythm that rotates between Europe, North America, and Mongolia. MKCNA hosts the North American festival and connects our players to the partner festivals on either side.
+      </p>
+    </div>
+
+    <div class="hidden md:grid grid-cols-3 gap-6 relative mb-8" aria-hidden="true">
+      <div class="absolute left-[16.66%] right-[16.66%] top-[11px] h-0.5 bg-brand-amber"></div>
+      {
+        timeline.map((t) => (
+          <div class="relative flex flex-col items-center">
+            <span class:list={['w-6 h-6 rounded-full border-[3px] border-brand-amber', t.current ? 'bg-brand-amber' : 'bg-brand-cream']} />
+            <span class="mt-2 font-serif font-bold text-2xl text-brand-espresso leading-none">{t.year}</span>
+            <span class="text-sm text-brand-amberDark mt-1">{t.region}</span>
+          </div>
+        ))
+      }
+    </div>
+
+    <ol class="grid md:grid-cols-3 gap-6 list-none p-0 m-0">
+      <PartnerFestivalCard festival={europe} sizes={posterSizes} />
+
+      <li class="rounded-2xl p-8 flex flex-col bg-night text-[#e3ecf8] border-2 border-brand-amber">
+        {
+          na.data.poster && (
+            <div class="-mx-8 -mt-8 mb-6 aspect-[4/5] rounded-t-2xl overflow-hidden bg-white">
+              <Image src={na.data.poster.image} widths={[400, 800]} sizes={posterSizes} alt={na.data.poster.alt} class="w-full h-full object-cover object-center" />
+            </div>
+          )
+        }
+        <div class="flex items-center justify-between mb-6">
+          <span class="text-sm font-bold uppercase tracking-wider text-brand-amber">North America &middot; {naYear}</span>
+          <span class="text-xs font-semibold px-3 py-1 rounded-full bg-brand-amber text-brand-espresso">Hosted by MKCNA</span>
+        </div>
+        <h3 class="text-2xl font-serif font-bold leading-tight mb-2 text-white">{na.data.title}</h3>
+        <p class="font-semibold text-brand-amber">{na.data.city}</p>
+        <p class="text-sm mb-4">{festivalDates(na)}</p>
+        <p class="text-sm leading-relaxed mb-6">{na.data.summary}</p>
+        <div class="mt-auto text-sm font-semibold text-brand-amber">
+          <a class="underline" href={festivalUrl(na)}>Festival details</a> &middot; <a class="underline" href="/festivals">All festivals</a>
+        </div>
+      </li>
+
+      <PartnerFestivalCard festival={mongolia} sizes={posterSizes} />
+    </ol>
+  </div>
+</section>

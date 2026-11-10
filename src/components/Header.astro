@@ -1,0 +1,70 @@
+---
+import { nav, site } from '../site.config';
+
+const path = Astro.url.pathname;
+const isCurrent = (match?: string) => !!match && (path === match || path.startsWith(`${match}/`));
+---
+
+<header class="sticky top-0 z-50 bg-brand-cream/95 backdrop-blur-sm border-b border-brand-beige">
+  <div class="max-w-7xl mx-auto px-6 h-[72px] flex items-center justify-between gap-6">
+    <a href="/" class="flex items-center gap-3 no-underline shrink-0">
+      <span class="w-10 h-10 rounded-full bg-brand-amber flex items-center justify-center text-brand-espresso font-cinzel font-bold text-xl">M</span>
+      <span class="leading-tight">
+        <span class="block font-cinzel font-bold text-lg text-brand-espresso">{site.shortName}</span>
+        <span class="hidden sm:block text-xs text-brand-slate">{site.name}</span>
+      </span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-9 text-[15px] font-medium" aria-label="Main">
+      {
+        nav.map((item) => (
+          <a class="navlink hover:text-brand-amberDark" href={item.href} aria-current={isCurrent(item.match) ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))
+      }
+      <a class="bg-brand-espresso text-brand-cream hover:bg-black px-6 py-2.5 rounded-full" href="#donate">Donate</a>
+    </nav>
+    <button
+      id="menubtn"
+      class="lg:hidden w-11 h-11 -mr-2 flex items-center justify-center rounded-full hover:bg-brand-beige/60"
+      aria-expanded="false"
+      aria-controls="mobnav"
+      aria-label="Open menu"
+    >
+      <svg class="text-brand-espresso" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path id="menuicon" d="M4 7h16M4 12h16M4 17h16"></path>
+      </svg>
+    </button>
+  </div>
+  <nav id="mobnav" hidden class="lg:hidden border-t border-brand-beige bg-brand-cream px-6 pt-2 pb-6" aria-label="Mobile">
+    {
+      nav.map((item) => (
+        <a class="navlink block py-3.5 text-lg border-b border-brand-beige" href={item.href} aria-current={isCurrent(item.match) ? 'page' : undefined}>
+          {item.label}
+        </a>
+      ))
+    }
+    <a class="block mt-5 text-center bg-brand-espresso text-brand-cream px-6 py-3.5 rounded-full font-medium" href="#donate">Donate</a>
+  </nav>
+</header>
+
+<script>
+  const btn = document.getElementById('menubtn')!;
+  const menu = document.getElementById('mobnav')!;
+  const icon = document.getElementById('menuicon')!;
+
+  function setOpen(open: boolean) {
+    menu.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    icon.setAttribute('d', open ? 'M6 6l12 12M18 6L6 18' : 'M4 7h16M4 12h16M4 17h16');
+  }
+
+  btn.addEventListener('click', () => setOpen(menu.hasAttribute('hidden')));
+  menu.addEventListener('click', (e) => {
+    if ((e.target as Element).closest('a')) setOpen(false);
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+</script>

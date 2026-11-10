@@ -1,0 +1,28 @@
+---
+import { Image } from 'astro:assets';
+import type { PartnerFestival } from '../data/cycle';
+
+interface Props {
+  festival: PartnerFestival;
+  sizes: string;
+}
+const { festival: f, sizes } = Astro.props;
+const widths = [400, 800, f.poster.width].filter((w, i, a) => w <= f.poster.width && a.indexOf(w) === i);
+---
+
+<li class="rounded-2xl p-8 flex flex-col bg-brand-ivory border border-brand-beige text-brand-slate">
+  <div class="-mx-8 -mt-8 mb-6 aspect-[4/5] rounded-t-2xl overflow-hidden bg-white">
+    <Image src={f.poster} widths={widths} sizes={sizes} alt={f.posterAlt} class:list={['w-full h-full', f.posterFit]} />
+  </div>
+  <div class="flex items-center justify-between mb-6">
+    <span class="text-sm font-bold uppercase tracking-wider text-brand-amberDark">{f.region} &middot; {f.year}</span>
+    <span class="text-xs font-semibold px-3 py-1 rounded-full bg-brand-beige text-brand-espresso">{f.status}</span>
+  </div>
+  <h3 class="text-2xl font-serif font-bold leading-tight mb-2 text-brand-espresso">{f.title}</h3>
+  <p class="font-semibold text-brand-amberDark">{f.city}</p>
+  <p class="text-sm mb-4">{f.dates}</p>
+  <p class="text-sm leading-relaxed mb-6">{f.summary}</p>
+  <div class="mt-auto text-sm font-semibold text-brand-amberDark">
+    <a class="underline" href={f.link.href} target="_blank" rel="noopener noreferrer">{f.link.label}</a>
+  </div>
+</li>
